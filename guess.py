@@ -157,9 +157,14 @@ class guess:
         print("Game     Word     Status     Bad Guesses     Missed Letters     Score")
         print("____     ____     ______     ___________     ______________     _____")
         print("\n")
+
+        total_score = 0
         for game in self.games:
             if game.is_game_finished():
+                total_score += game.calculate_score()
                 print(game)
+        print("\n")
+        print("Final Score: " + str(total_score))
         print("\n")
 
 if __name__ == '__main__':
