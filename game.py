@@ -4,12 +4,13 @@ class game:
 
     def __init__(self, game_number, word):
         self.game_number = game_number
-        self.word = "laid"
+        self.word = word
         self.bad_guesses = 0
-        self.missed_letters = 4
+        self.missed_letters = 0
         self.num_letters_requested = 0
         self.score = 0.0
         self.status = 'failure'
+        self.num_matched_letters = 0
         self.matched_letters = set()
         self.guessed_letters = set()
 
@@ -28,14 +29,17 @@ class game:
                 guesses += 1
                 self.matched_letters.add(letter)
 
+        self.num_matched_letters += guesses
+
         # decrease the number of missed letters
-        self.missed_letters -= guesses
+        if guesses == 0:
+            self.missed_letters += 1
 
         # increment number of tries
         self.num_letters_requested += 1
 
         # if all the letters have been found, change status to success.
-        if len(self.matched_letters) == 4:
+        if self.num_matched_letters == 4:
             self.status = "Success"
 
         return guesses
@@ -105,8 +109,6 @@ class game:
 if __name__ == '__main__':
     g = game(1, 'test')
     g.increment_bad_guess()
-    g.increment_missed_letter()
-    g.increment_missed_letter()
     print(g.formatted_result())
 
 # frequency dict to calculate score

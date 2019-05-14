@@ -2,6 +2,7 @@ from game import game
 from stringDatabase import stringDatabase
 import random
 import enum
+import sys
 
 menu = """
 ** The great guessing game **
@@ -17,32 +18,11 @@ quit_confirmation_message = """
 #
 """
 
-invalid_option_message = """
-#
-# Select a valid option!
-#
-"""
-
-invalid_letter_message = """
-@
-@ Enter a valid letter!
-@
-"""
-
-wrong_guess_message = """
-@
-@ Your guess was absolutely wrong!
-@
-"""
-
+invalid_option_message = "Select a valid option!"
+invalid_letter_message = "Enter a valid letter!"
+wrong_guess_message = "Your guess was absolutely wrong!"
 no_matches_found = "No letter matched!"
-
-matches_found = """
-= = = = = = = = = = = = = = = = = =
-= Awesome, you found %d matches.   =
-= = = = = = = = = = = = = = = = = =
-"""
-
+matches_found = "Awesome, you found %d matches."
 already_guessed_letter = "You have already guessed '%c'"
 
 def log(message):
@@ -98,7 +78,7 @@ class guess:
         elif user_input == 'q':
             return menu_options.quit_game
         else:
-            print(invalid_option_message)
+            log(invalid_option_message)
             return menu_options.none
 
     def handle_option(self, option):
@@ -116,7 +96,7 @@ class guess:
     def handle_letter(self):
         user_input = input("Enter a letter:\n")
         if len(user_input) > 1 or len(user_input) < 1 or (not user_input.isalpha()):
-            print(invalid_letter_message)
+            log(invalid_letter_message)
             return True
         else:
             correct_guesses = self.current_game.guess_letter(user_input)
@@ -125,7 +105,7 @@ class guess:
             elif correct_guesses == 0:
                 log(no_matches_found)
             else:
-                print(matches_found % correct_guesses)
+                log(matches_found % correct_guesses)
 
         return True
 
@@ -138,9 +118,10 @@ class guess:
         has_guessed = self.current_game.guess_word(user_input)
 
     def print_menu(self):
-        print()
-        print(self.current_game.word)
-        print()
+        if is_debug:
+            print()
+            print("Current word is: " + self.current_game.word)
+            print()
         print(menu % self.current_game.build_guessed_word())
 
     def start_new_game(self):
@@ -168,5 +149,7 @@ class guess:
         print("\n")
 
 if __name__ == '__main__':
+    # check if running if debug mode
+    is_debug = 'debug' in sys.argv
     g = guess()
     g.start()
