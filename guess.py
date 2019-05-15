@@ -66,6 +66,7 @@ class guess:
         terminates the program.
         """
 
+        # start a new game
         is_game_running = True
         self.start_new_game()
 
@@ -80,8 +81,12 @@ class guess:
 
             # check if games has finished (user guessed all letters)
             if self.current_game.is_game_finished():
+                # store the game in list
+                self.games.append(self.current_game)
+
                 if self.current_game.status == "Success":
                     log("Awesome you succeded!")
+
                 log("Starting New Game")
                 self.start_new_game()
 
@@ -179,27 +184,29 @@ class guess:
         game_id = len(self.games) + 1
         # create new game
         self.current_game = game(game_id, random_word)
-        # store the game in list
-        self.games.append(self.current_game)
 
     def display_result(self):
         """Display the final result of all games.
 
         Print out the result of all games in a tabular form, along with
         the final score."""
-        print("\n")
-        print("Game     Word     Status     Bad Guesses     Missed Letters     Score")
-        print("____     ____     ______     ___________     ______________     _____")
-        print("\n")
 
-        total_score = 0
-        for game in self.games:
-            if game.is_game_finished():
-                total_score += game.calculate_score()
-                print(game)
-        print("\n")
-        print("Final Score: " + str(total_score))
-        print("\n")
+        if len(self.games) == 0:
+            log("You did not complete any game :(")
+        else:
+            print("\n")
+            print("Game     Word     Status     Bad Guesses     Missed Letters     Score")
+            print("____     ____     ______     ___________     ______________     _____")
+            print("\n")
+
+            total_score = 0
+            for game in self.games:
+                if game.is_game_finished():
+                    total_score += game.calculate_score()
+                    print(game)
+            print("\n")
+            print("Final Score: %0.2f" % total_score)
+            print("\n")
 
 if __name__ == '__main__':
     # check if running if debug mode
