@@ -126,13 +126,17 @@ class guess:
             self.handle_guess()
         elif option == menu_option.tell_me:
             self.handle_tell_me()
+
         return True
 
     def handle_letter(self):
+        """Get a letter from user and pass to game object.
+
+        Takes a letter input from the user and guesses the letter on the game.
+        """
         user_input = input("Enter a letter:\n")
         if len(user_input) > 1 or len(user_input) < 1 or (not user_input.isalpha()):
             log(invalid_letter_message)
-            return True
         else:
             correct_guesses = self.current_game.guess_letter(user_input)
             if correct_guesses == -1:
@@ -142,17 +146,27 @@ class guess:
             else:
                 log(matches_found % correct_guesses)
 
-        return True
-
     def handle_tell_me(self):
+        """Give up and show the correct word.
+
+        Finish the current game by giving up and showing the current word
+        to the user."""
         self.current_game.give_up()
         log("The word was '%s'" % self.current_game.word)
 
     def handle_guess(self):
+        """Get a word from user and pass to game object.
+
+        Takes a word input from the user and guesses the letter on the game.
+        """
         user_input = input("Enter a guess:\n")
         has_guessed = self.current_game.guess_word(user_input)
 
     def print_menu(self):
+        """Print the menu.
+
+        Print the game menu along with the uncovered letters of the
+        current game."""
         if is_debug:
             print()
             print("Current word is: " + self.current_game.word)
@@ -169,6 +183,10 @@ class guess:
         self.games.append(self.current_game)
 
     def display_result(self):
+        """Display the final result of all games.
+
+        Print out the result of all games in a tabular form, along with
+        the final score."""
         print("\n")
         print("Game     Word     Status     Bad Guesses     Missed Letters     Score")
         print("____     ____     ______     ___________     ______________     _____")
