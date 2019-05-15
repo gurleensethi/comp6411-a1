@@ -47,9 +47,9 @@ class guess:
     getting user input and overall flow of the game.
 
     Attributes:
-        db (stringDatabase): database containing list of words, also used to get a random word.
-        games (list): list of all the games played by the user.
-        current_game (game): points to the current game being played.
+        db (stringDatabase): Database containing list of words, also used to get a random word.
+        games (list): List of all the games played by the user.
+        current_game (game): Points to the current game being played.
     """
 
     def __init__(self):
@@ -203,6 +203,6 @@ class guess:
 
 if __name__ == '__main__':
     # check if running if debug mode
-    is_debug = 'debug' in sys.argv
+    is_debug = '--debug' in sys.argv
     g = guess()
     g.start()
