@@ -33,7 +33,7 @@ def log(message):
     print("#" * (len(message) + 16))
     print()
 
-class menu_options(enum.Enum):
+class menu_option(enum.Enum):
     guess = 0
     tell_me = 1
     letter = 2
@@ -41,6 +41,16 @@ class menu_options(enum.Enum):
     none = 4
 
 class guess:
+    """A class that represents the game itself.
+
+    It carries out functionality of displaying the menu,
+    getting user input and overall flow of the game.
+
+    Attributes:
+        db (stringDatabase): database containing list of words, also used to get a random word.
+        games (list): list of all the games played by the user.
+        current_game (game): points to the current game being played.
+    """
 
     def __init__(self):
         self.db = stringDatabase()
@@ -49,8 +59,16 @@ class guess:
         self.current_game = None
 
     def start(self):
+        """Start the game.
+
+        Creates a new game, displays the menu and waits for user input.
+        Game keeps on going until the user chosses to quit using 'q' or
+        terminates the program.
+        """
+
         is_game_running = True
         self.start_new_game()
+
         while is_game_running:
             self.print_menu()
 
@@ -68,28 +86,45 @@ class guess:
                 self.start_new_game()
 
     def read_option(self):
+        """"Reads user input for the menu.
+
+        Reads input from the user and maps it to appropriate menu_option enum.
+
+        Returns:
+            menu_option mapped from user input.
+        """
         user_input = input("")
         if user_input == 'g':
-            return menu_options.guess
+            return menu_option.guess
         elif user_input == 'l':
-            return menu_options.letter
+            return menu_option.letter
         elif user_input == 't':
-            return menu_options.tell_me
+            return menu_option.tell_me
         elif user_input == 'q':
-            return menu_options.quit_game
+            return menu_option.quit_game
         else:
             log(invalid_option_message)
-            return menu_options.none
+            return menu_option.none
 
     def handle_option(self, option):
-        if option == menu_options.quit_game:
+        """Take action againts the user input.
+
+        Routes the mapped user input to the appropriate function.
+
+        Args:
+            option (menu_option): option mapped from user input.
+
+        Returns:
+            True if user wants to exit the game, False otherwise.
+        """
+        if option == menu_option.quit_game:
             user_input = input(quit_confirmation_message)
             return not (user_input == 'y')
-        elif option == menu_options.letter:
+        elif option == menu_option.letter:
             self.handle_letter()
-        elif option == menu_options.guess:
+        elif option == menu_option.guess:
             self.handle_guess()
-        elif option == menu_options.tell_me:
+        elif option == menu_option.tell_me:
             self.handle_tell_me()
         return True
 
