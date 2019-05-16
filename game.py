@@ -3,7 +3,7 @@ formatted_result = "%d        %s     %s    %d               %d                  
 class game:
     """Contains the state of a game.
 
-    Contains the data related to a game, along with the operations
+    Contains the data related to a single game round, along with the operations
     that can be performed on the game itself.
 
     Attributes:
