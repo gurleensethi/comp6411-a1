@@ -26,6 +26,13 @@ matches_found = "Awesome, you found %d matches."
 already_guessed_letter = "You have already guessed '%c'"
 
 def log(message):
+    """Helper function for printing logs.
+
+    Prints the provided message in a decorated text box.
+
+    Args:
+        message (str): Message to be printed.
+    """
     formatted_message = "@        " + message + "      @"
     print()
     print("#" * (len(message) + 16))
@@ -34,6 +41,8 @@ def log(message):
     print()
 
 class menu_option(enum.Enum):
+    """Enums representing the available menu options
+    in the game."""
     guess = 0
     tell_me = 1
     letter = 2
