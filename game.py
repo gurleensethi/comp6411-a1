@@ -54,7 +54,10 @@ class game:
         # find the number of letter matches
         guesses = 0
         for letter in self.word:
+            # letter found
             if letter == guessed_letter:
+                # increment score
+                self.score += frequencies[letter]
                 guesses += 1
                 self.matched_letters.add(letter)
 
