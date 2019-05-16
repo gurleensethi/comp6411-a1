@@ -79,14 +79,10 @@ class guess:
         is_game_running = True
         self.start_new_game()
 
-        while is_game_running:
+        while is_game_running and self.are_rounds_left():
             self.print_menu()
 
             is_game_running = self.handle_option(self.read_option())
-
-            # if user quits the game print the final table and score
-            if not is_game_running:
-                self.display_result()
 
             # check if games has finished (user guessed all letters)
             if self.current_game.is_game_finished():
@@ -98,6 +94,8 @@ class guess:
 
                 log("Starting New Game")
                 self.start_new_game()
+
+        self.display_result()
 
     def read_option(self):
         """"Reads user input for the menu.
@@ -217,8 +215,16 @@ class guess:
             print("Final Score: %0.2f" % total_score)
             print("\n")
 
+    def are_rounds_left(self):
+        """Tells if 100 range rounds are over or not.
+
+        Returns:
+            True if 100 rounds are reached, False otherwise.
+        """
+        return len(self.games) < 100
+
 if __name__ == '__main__':
-    # check if running if debug mode
+    # check if running in debug mode
     is_debug = '--debug' in sys.argv
     g = guess()
     g.start()
