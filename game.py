@@ -21,7 +21,7 @@ class game:
 
     def __init__(self, game_number, word):
         self.game_number = game_number
-        self.word = "mall"
+        self.word = word
         self.bad_guesses = 0
         self.missed_letters = 0
         self.num_letters_requested = 0
@@ -44,10 +44,6 @@ class game:
             The count of letters that were uncovered.
         """
 
-        # check if user has already guessed the letter
-        if guessed_letter in self.guessed_letters:
-            return -1
-
         # record the guessed letter
         self.guessed_letters.add(guessed_letter)
 
@@ -63,8 +59,7 @@ class game:
         self.num_matched_letters += guesses
 
         # decrease the number of missed letters
-        if guesses == 0:
-            self.missed_letters += 1
+        self.missed_letters += guesses
 
         # increment number of tries
         self.num_letters_requested += 1
