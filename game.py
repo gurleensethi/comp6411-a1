@@ -21,7 +21,7 @@ class game:
 
     def __init__(self, game_number, word):
         self.game_number = game_number
-        self.word = word
+        self.word = "mall"
         self.bad_guesses = 0
         self.missed_letters = 0
         self.num_letters_requested = 0
@@ -57,7 +57,6 @@ class game:
             # letter found
             if letter == guessed_letter:
                 # increment score
-                self.score += frequencies[letter]
                 guesses += 1
                 self.matched_letters.add(letter)
 
@@ -119,7 +118,7 @@ class game:
         self.score = 0.0
 
         for letter in self.word:
-            if not (letter in self.matched_letters):
+            if letter in self.matched_letters:
                 self.score -= frequencies[letter]
 
         self.status = "Gave Up"
@@ -145,7 +144,8 @@ class game:
                 calculated_score /= self.num_letters_requested
 
             if self.bad_guesses != 0:
-                calculated_score -= self.bad_guesses * 0.9
+                for i in range(self.bad_guesses):
+                    calculated_score *= 0.90
 
             return calculated_score
 
