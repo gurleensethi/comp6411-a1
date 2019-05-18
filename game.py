@@ -44,6 +44,10 @@ class game:
             The count of letters that were uncovered.
         """
 
+        # return if letter already guessed
+        if guessed_letter in self.guessed_letters:
+            return -1
+
         # record the guessed letter
         self.guessed_letters.add(guessed_letter)
 
@@ -54,12 +58,15 @@ class game:
             if letter == guessed_letter:
                 # increment score
                 guesses += 1
+                self.score += frequencies[letter]
                 self.matched_letters.add(letter)
 
         self.num_matched_letters += guesses
 
-        # decrease the number of missed letters
-        self.missed_letters += guesses
+        # increase the number of missed letter if no
+        # guess is found
+        if guesses == 0:
+            self.missed_letters += guesses
 
         # increment number of tries
         self.num_letters_requested += 1
