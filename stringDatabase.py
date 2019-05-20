@@ -20,14 +20,19 @@ class stringDatabase:
         It stores all the words in words_file.
         """
         words_file = open('four_letters.txt')
+
         for line in words_file.readlines():
           self.word_list.extend(line.rstrip("\r\n").split(" "))
+
+        if len(self.word_list) == 0:
+            raise Exception("\n\n\n***  Attention  ***\n'%s' doesn't have any words in it!\n\n\n" % self.filePath)
 
     def size(self):
         return len(self.word_list)
 
     def random_entry(self):
-        random_int = random.randint(0, self.size())
+        random_int = random.randint(0, self.size() - 1)
+        print(random_int)
         return self.word_list[random_int]
 
 if __name__ == '__main__':
