@@ -66,7 +66,7 @@ class game:
         # increase the number of missed letter if no
         # guess is found
         if guesses == 0:
-            self.missed_letters += guesses
+            self.missed_letters += 1
 
         # increment number of tries
         self.num_letters_requested += 1
@@ -120,7 +120,7 @@ class game:
         self.score = 0.0
 
         for letter in self.word:
-            if letter in self.matched_letters:
+            if not (letter in self.matched_letters):
                 self.score -= frequencies[letter]
 
         self.status = "Gave Up"
