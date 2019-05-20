@@ -174,6 +174,9 @@ class guess:
         user_input = input("Enter a guess:\n")
         has_guessed = self.current_game.guess_word(user_input)
 
+        if not has_guessed:
+            log("Wrong guess!")
+
     def print_menu(self):
         """Print the menu.
 
