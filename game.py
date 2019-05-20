@@ -185,11 +185,6 @@ class game:
         #print("Game    Word     Status      Bad Guesses    Missed Letters    Score")
         return formatted_result % (self.game_number, self.word, self.status, self.bad_guesses, self.missed_letters, self.calculate_score())
 
-if __name__ == '__main__':
-    g = game(1, 'test')
-    g.increment_bad_guess()
-    print(g.formatted_result())
-
 # frequency dict to calculate score
 frequencies = {
     'a': 8.17,
@@ -219,3 +214,12 @@ frequencies = {
     'y': 1.97,
     'z': 0.07,
 }
+
+if __name__ == '__main__':
+    # Sample test case
+    g = game(1, 'test')
+    g.guess_letter('t')
+    g.guess_letter('e')
+    g.guess_word('tara')
+    g.give_up()
+    print(g)
